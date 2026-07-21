@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-URL = "https://piemontevda.lnd.it/comunicati-ufficiali-piemonte-valle-daosta-2025-2026/"
+URL = "https://piemontevda.lnd.it/comunicati-ufficiali-piemonte-valle-daosta-2026-2027/"
 
 r = requests.get(URL, timeout=20)
 
