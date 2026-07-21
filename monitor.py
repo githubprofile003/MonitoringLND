@@ -16,10 +16,11 @@ links = soup.find_all("a")
 
 print("Numero link trovati:", len(links))
 
-print("Primi 10 link:")
+print("Link contenenti CU o comunicati:")
 
-for a in links[:10]:
-    print(a.get_text(strip=True), a.get("href"))
+for a in links:
+    testo = a.get_text(strip=True)
+    href = a.get("href", "")
 
-    with open(STATE_FILE, "w") as f:
-        f.write(latest)
+    if "CU" in testo.upper() or "COMUNICATO" in testo.upper():
+        print(testo, href)
