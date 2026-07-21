@@ -56,29 +56,20 @@ if os.path.exists(STATE_FILE):
     with open(STATE_FILE, "r") as f:
         old = f.read().strip()
 
-old = "TEST_FORZATO"
-
 # Prima esecuzione
 if old == "":
     print("Prima esecuzione, salvo il comunicato")
 
 
 # Nuovo comunicato trovato
-#elif latest != old:
-#    print("NUOVO COMUNICATO TROVATO!")
-#    print(latest)
-
-#    send_telegram(
-#        f"⚽ Nuovo comunicato LND Piemonte:\n\n{latest}\n\n{URL}"
-#    )
-
 elif latest != old:
     print("NUOVO COMUNICATO TROVATO!")
     print(latest)
 
     send_telegram(
-        f"🧪 TEST NOTIFICA LND Piemonte\n\nIl sistema funziona correttamente.\nUltimo comunicato rilevato:\n{latest}"
+        f"⚽ Nuovo comunicato LND Piemonte:\n\n{latest}\n\n{URL}"
     )
+
 
 # Nessuna novità
 else:
