@@ -1,54 +1,25 @@
 import requests
 from bs4 import BeautifulSoup
-import os
-import json
 
-URL = "https://piemontevda.lnd.it/comunicati-ufficiali-piemonte-valle-daosta-2026-2027/"
-
-TOKEN = os.environ["TELEGRAM_TOKEN"]
-CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
-
-STATE_FILE = "last.txt"
-
-
-def send(msg):
-    requests.post(
-        f"https://api.telegram.org/bot{TOKEN}/sendMessage",
-        json={
-            "chat_id": CHAT_ID,
-            "text": msg
-        }
-    )
-
+URL = "https://piemontevda.lnd.it/comunicati-ufficiali-piemonte-valle-daosta-2025-2026/"
 
 r = requests.get(URL, timeout=20)
+
+print("Status:", r.status_code)
+
 soup = BeautifulSoup(r.text, "html.parser")
+
+print("Titolo pagina:")
+print(soup.title)
 
 links = soup.find_all("a")
 
-pdfs = []
+print("Numero link trovati:", len(links))
 
-for a in links:
-    href = a.get("href", "")
-    text = a.get_text(strip=True)
+print("Primi 10 link:")
 
-    if "comunicato" in text.lower():
-        pdfs.append(text)
-
-if not pdfs:
-    exit()
-
-latest = pdfs[0]
-
-old = ""
-
-if os.path.exists(STATE_FILE):
-    old = open(STATE_FILE).read().strip()
-
-if latest != old:
-
-    if old:
-        send(f"⚽ Nuovo comunicato LND:\n{latest}")
+for a in links[:10]:
+    print(a.get_text(strip=True), a.get("href"))
 
     with open(STATE_FILE, "w") as f:
         f.write(latest)
